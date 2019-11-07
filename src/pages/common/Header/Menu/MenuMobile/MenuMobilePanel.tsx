@@ -11,6 +11,7 @@ import { BAZAR_URL, GLOBAL_SITE_URL } from 'src/utils/urls'
 const PanelContainer = styled(Box)`
   width: 100%;
   position: absolute;
+  top: -100%;
   left: 0;
   right: 0;
   display: block;
@@ -44,27 +45,25 @@ export const MenuMobileLinkContainer = styled(Box)`
 export class MenuMobilePanel extends React.Component {
   render() {
     return (
-      <>
-        <PanelContainer>
-          <PanelMenu>
-            {COMMUNITY_PAGES.map(page => (
-              <MenuMobileLink
-                path={page.path}
-                content={page.title}
-                key={page.path}
-              />
-            ))}
-            <Profile isMobile={true} />
-            <MenuMobileLinkContainer>
-              <MenuMobileExternalLink content={'Bazar'} href={BAZAR_URL} />
-              <MenuMobileExternalLink
-                content={'Global Site'}
-                href={GLOBAL_SITE_URL}
-              />
-            </MenuMobileLinkContainer>
-          </PanelMenu>
-        </PanelContainer>
-      </>
+      <PanelContainer>
+        <PanelMenu>
+          {COMMUNITY_PAGES.map(page => (
+            <MenuMobileLink
+              path={page.path}
+              content={page.title}
+              key={page.path}
+            />
+          ))}
+          <Profile isMobile={true} />
+          <MenuMobileLinkContainer>
+            <MenuMobileExternalLink content={'Bazar'} href={BAZAR_URL} />
+            <MenuMobileExternalLink
+              content={'Global Site'}
+              href={GLOBAL_SITE_URL}
+            />
+          </MenuMobileLinkContainer>
+        </PanelMenu>
+      </PanelContainer>
     )
   }
 }

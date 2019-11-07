@@ -5,6 +5,7 @@ import Profile from 'src/pages/common/Header/Menu/Profile/Profile'
 import MenuDesktop from 'src/pages/common/Header/Menu/MenuDesktop'
 import MenuMobilePanel from 'src/pages/common/Header/Menu/MenuMobile/MenuMobilePanel'
 import posed, { PoseGroup } from 'react-pose'
+import { Frame, AnimatePresence } from 'framer'
 import Logo from 'src/pages/common/Header/Menu/Logo/Logo'
 import theme from 'src/themes/styled.theme'
 import HamburgerMenu from 'react-hamburger-menu'
@@ -18,7 +19,7 @@ interface IInjectedProps extends IProps {
 }
 
 const MobileMenuWrapper = styled(Flex)`
-  position: relative;
+  /* position: relative; */
 
   @media only screen and (max-width: ${theme.breakpoints[1]}) {
     display: flex;
@@ -40,18 +41,23 @@ const DesktopMenuWrapper = styled(Flex)`
   }
 `
 
-const AnimationContainer = posed.div({
-  enter: {
-    duration: 250,
-    position: 'relative',
-    top: '0',
-  },
-  exit: {
-    duration: 250,
-    position: 'relative',
-    top: '-100%',
-  },
-})
+// const AnimationContainer = posed.div({
+//   enter: {
+//     duration: 250,
+//     position: 'relative',
+//     top: '0',
+//   },
+//   exit: {
+//     duration: 250,
+//     position: 'relative',
+//     top: '-100%',
+//   },
+// })
+
+const variants = {
+  open: { y: 0 },
+  closed: { y: 0 },
+}
 
 @inject('mobileMenuStore')
 @observer
@@ -100,15 +106,32 @@ export class Header extends React.Component<IProps> {
             </Flex>
           </MobileMenuWrapper>
         </Flex>
-        <PoseGroup>
+        {console.log('c', menu.showMobilePanel)}
+        <AnimatePresence>
           {menu.showMobilePanel && (
-            <AnimationContainer key={'mobilePanelContainer'}>
+            <Frame
+              initial={{ top: '-100%' }}
+              animate={{ top: '0' }}
+              exit={{ top: '-100%' }}
+              height={'100%'}
+              width={'100%'}
+              position={'relative'}
+            >
               <MobileMenuWrapper>
                 <MenuMobilePanel />
               </MobileMenuWrapper>
-            </AnimationContainer>
+            </Frame>
           )}
-        </PoseGroup>
+        </AnimatePresence>
+        {/* <motion.div
+          animate={menu.showMobilePanel ? 'open' : 'closed'}
+          variants={variants}
+          transition={{ duration: 1 }}
+        > */}
+        {/* {menu.showMobilePanel && ( */}
+
+        {/* )} */}
+        {/* </motion.div> */}
       </>
     )
   }
